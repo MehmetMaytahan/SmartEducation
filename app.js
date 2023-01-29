@@ -1,25 +1,29 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const pageRoute = require("./routes/pageRoute");
+
 const app = express();
 const PORT = 3000;
 
 // TEMPLATE ENGINE
 app.set("view engine", "ejs");
 
-// MIDDLEWARE
+// MIDDLEWARES
 app.use(express.static("public"));
+mongoose
 
-app.get("/", (req, res) => {
-  res.status(200).render("index", {
-    page_name: "index"
-  });
-});
+// ROUTES
+app.use("/", pageRoute);
 
-app.get("/about", (req, res) => {
-  res.status(200).render("about", {
-    page_name: "about"
-  });
-});
-
+// DATABASE CONNECTION
+mongoose.connect(
+  "mongodb://127.0.0.1:27017/smartEdu",
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  err => {
+    if (err) console.log(err);
+    console.log("Database connected");
+  }
+);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
