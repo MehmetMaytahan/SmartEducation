@@ -24,7 +24,8 @@ exports.loginUser = async (req, res) => {
         bcrypt.compare(password, user.password, (err, same) => {
           if (same) {
             // USER SESSION
-            res.status(200).send("GIRIS YAPTIN");
+            req.session.userID = user._id;
+            res.status(200).redirect("/");
           }
         });
       }
