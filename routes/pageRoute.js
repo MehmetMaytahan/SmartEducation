@@ -4,11 +4,13 @@ const router = express.Router();
 const {
   getHomePage,
   getAboutPage,
-  getRegisterPage
+  getRegisterPage,
+  getLoginPage
 } = require("../controllers/pageController");
 
 router.get("/", getHomePage);
 router.get("/about", getAboutPage);
 router.get("/register", getRegisterPage);
+router.get("/login", getLoginPage);
 
 module.exports = router;
