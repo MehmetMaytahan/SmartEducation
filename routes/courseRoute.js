@@ -6,8 +6,9 @@ const {
   getAllCourses,
   getCourse
 } = require("../controllers/courseController");
+const roleMiddleware = require("../middlewares/roleMiddleware");
 
-router.post("/", createCourse); // http://localhost:3000/courses
+router.post("/", roleMiddleware(["teacher", "admin"]), createCourse); // http://localhost:3000/courses
 router.get("/", getAllCourses);
 router.get("/:slug", getCourse);
 
