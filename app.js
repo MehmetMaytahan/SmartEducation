@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: `${process.env.SESSION_SECRET}`,
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/smartEdu" })
