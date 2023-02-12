@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -23,7 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "my_keyboard_cat",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/smartEdu" })
@@ -41,8 +42,9 @@ app.use("/categories", categoryRoute);
 app.use("/users", userRoute);
 
 // DATABASE CONNECTION
+
 mongoose.connect(
-  "mongodb://127.0.0.1:27017/smartEdu",
+  process.env.mongoDB_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
   err => {
     if (err) console.log(err);
@@ -50,7 +52,6 @@ mongoose.connect(
   }
 );
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });
