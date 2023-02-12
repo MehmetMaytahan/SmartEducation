@@ -26,12 +26,14 @@ exports.loginUser = async (req, res) => {
             // USER SESSION
             req.session.userID = user._id;
             res.status(200).redirect("/users/dashboard");
+          } else {
+            res.status(401).json({
+              success: "fail",
+              message: "Mail yada sifre hatali"
+            });
           }
         });
       }
-    });
-    res.status(200).json({
-      status: "tebrikler"
     });
   } catch (error) {}
 };
