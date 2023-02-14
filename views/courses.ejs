@@ -29,13 +29,14 @@
 											</div>
 											<div class="course-desc">
 												<p>
-													<%= course.description %>
+													<%= course.description.substring(0,80) %>...
 												</p>
 											</div>
 										</div>
 										<div class="course-meta-bot">
 											<ul>
-												<li><i class="fa fa-user" aria-hidden="true"></i>Teacher Name
+												<li><i class="fa fa-user" aria-hidden="true"></i>
+													<%= course.user.name %>
 												</li>
 											</ul>
 										</div>
