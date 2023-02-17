@@ -40,15 +40,39 @@
 
 									<blockquote class="default">
 										<%= course.description %>
-
 								</div>
+								<% if (userIN) { %>
+									<div>
+										<% if(user.courses.includes(course._id)) { %>
+											<form method="POST" action="/courses/release">
+												<input type="hidden" name="courseID" value="<%= course._id %>" />
+												<button
+													class="btn btn-lg btn-outline-danger col-lg-12 col-md-12 col-sm-12">Release</button>
+											</form>
+											<% } %>
+												<% if(!(user.courses.includes(course._id))) { %>
+													<form method="POST" action="/courses/enroll">
+														<input type="hidden" name="courseID"
+															value="<%= course._id %>" />
+														<button
+															class="btn btn-lg btn-outline-success col-lg-12 col-md-12 col-sm-12">Enroll</button>
+													</form>
+													<% } %>
+									</div>
+									<% } else { %>
+										<a href="/login">
+											<button
+												class="btn btn-lg btn-outline-primary col-lg-12 col-md-12 col-sm-12">Login
+												Please</button>
+										</a>
+										<% } %>
 							</div>
 						</div>
 
 						<div class="blog-author">
 							<div class="author-bio">
 								<h3 class="author_name"><a href="#">
-										<%=course.user.name %>
+										<%= course.user.name %>
 									</a></h3>
 								<h5>CEO at <a href="#">SmartEDU</a></h5>
 								<p class="author_det">

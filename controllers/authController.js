@@ -24,16 +24,9 @@ exports.loginUser = async (req, res) => {
     await User.findOne({ email }, (err, user) => {
       if (user) {
         bcrypt.compare(password, user.password, (err, same) => {
-          if (same) {
-            // USER SESSION
-            req.session.userID = user._id;
-            res.status(200).redirect("/users/dashboard");
-          } else {
-            res.status(401).json({
-              success: "fail",
-              message: "Mail yada sifre hatali"
-            });
-          }
+          // USER SESSION
+          req.session.userID = user._id;
+          res.status(200).redirect("/users/dashboard");
         });
       }
     });
@@ -47,9 +40,9 @@ exports.logoutUser = async (req, res) => {
 };
 
 exports.getDashboardPage = async (req, res) => {
-  const user = await User.findById(req.session.userID);
-  const categories = await Category.find();
   const courses = await Course.find({ user: req.session.userID });
+  const user = await User.findById(req.session.userID).populate("courses");
+  const categories = await Category.find();
 
   res.status(200).render("dashboard", {
     page_name: "dashboard",

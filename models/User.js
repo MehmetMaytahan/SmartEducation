@@ -21,7 +21,13 @@ const UserSchema = new Schema(
       type: String,
       enum: ["student", "teacher", "admin"],
       default: "student"
-    }
+    },
+    courses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course"
+      }
+    ]
   },
   {
     timestamps: true
@@ -30,6 +36,7 @@ const UserSchema = new Schema(
 
 UserSchema.pre("save", function(next) {
   const user = this;
+  if (!this.isModified("password")) return next();
 
   bycrpt.hash(user.password, 10, (error, hash) => {
     user.password = hash;
