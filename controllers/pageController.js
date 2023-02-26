@@ -32,7 +32,8 @@ exports.getContactPage = (req, res) => {
 };
 
 exports.sendEMail = async (req, res) => {
-  const htmlTemplate = `
+  try {
+    const htmlTemplate = `
   <!doctype html>
   <html>
     <head>
@@ -162,24 +163,30 @@ exports.sendEMail = async (req, res) => {
   </html>
   `;
 
-  // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: process.env.NODE_MAIL, //process.env.NODE_MAIL, // generated ethereal user
-      pass: process.env.NODE_PASS //process.env.NODE_PASS // generated ethereal password
-    }
-  });
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: process.env.NODE_MAIL, //process.env.NODE_MAIL, // generated ethereal user
+        pass: process.env.NODE_PASS //process.env.NODE_PASS // generated ethereal password
+      }
+    });
 
-  // send mail with defined transport object
-  await transporter.sendMail({
-    to: "maytahan71@gmail.com", // list of receivers
-    subject: `Smart EDU Contact Form New Message`, // Subject line
-    html: htmlTemplate // html body
-  });
+    // send mail with defined transport object
+    await transporter.sendMail({
+      to: "maytahan71@gmail.com", // list of receivers
+      subject: `Smart EDU Contact Form New Message`, // Subject line
+      html: htmlTemplate // html body
+    });
 
-  res.status(200).redirect("/contact");
+    req.flash("success", "We recevied your message successfully");
+    res.status(200).redirect("/contact");
+  } catch (error) {
+    req.flash("error", "Something happened!");
+    res.status(203).redirect("/contact");
+
+  }
 };
