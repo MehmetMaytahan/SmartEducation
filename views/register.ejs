@@ -24,8 +24,23 @@
                     <div class="col-xl-12 col-md-12 col-sm-12">
                         <div class="contact_form">
                             <div id="message"></div>
-                            <form id="contactform" class="" action="/users/signup" name="contactform" method="POST">
+
+                            <form method="POST" id="contactform" action="/users/signup" name="contactform" novalidate>
                                 <div class="row row-fluid">
+                                    <div class=" offset-1 col-xl-10 col-md-10 col-sm-10 text-center">
+
+                                        <% if(flashMessages) {%>
+                                            <% if (flashMessages.success) { %>
+                                                <div class="alert alert-success">
+                                                    <%= flashMessages.success %>
+                                                </div>
+                                                <% } else if (flashMessages.error){%>
+                                                    <div class="alert alert-danger">
+                                                        <%= flashMessages.error %>
+                                                    </div>
+                                                    <% } %>
+                                                        <% } %>
+                                    </div>
 
                                     <div class="offset-1 col-lg-10 col-md-10 col-sm-10">
                                         <input type="text" name="name" id="first_name" class="form-control"

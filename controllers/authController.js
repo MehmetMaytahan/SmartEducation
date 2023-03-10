@@ -1,3 +1,5 @@
+const { validationResult } = require("express-validator");
+
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const Category = require("../models/Category");
@@ -10,26 +12,41 @@ exports.createUser = async (req, res) => {
       page_name: "login"
     });
   } catch (error) {
-    res.status(400).json({
-      status: "fail",
-      message: error
-    });
+    const ReqErrors = validationResult(req);
+    const { errors } = ReqErrors;
+    console.log(errors);
+    for (err of errors) {
+      req.flash("error", `${err.msg}`);
+      console.log(err.msg);
+    }
+    res.status(400).redirect("/register");
   }
 };
 
 exports.loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const email = req.body.email === "" ? "a" : req.body.email;
+    const password = req.body.password;
 
-    await User.findOne({ email }, (err, user) => {
+    const userFind = await User.findOne({ email: email }, (err, user) => {
       if (user) {
         bcrypt.compare(password, user.password, (err, same) => {
-          // USER SESSION
-          req.session.userID = user._id;
-          res.status(200).redirect("/users/dashboard");
+          if (same) {
+            // USER SESSION
+            req.session.userID = user._id;
+            res.status(200).redirect("/users/dashboard");
+          } else {
+            req.flash("error", "Parola Veya Şifre Hatali");
+            res.status(400).redirect("/login");
+          }
         });
+      } else {
+        req.flash("error", "Doğru Email Adresi Yada Şifre Giriniz! ");
+        res.status(400).redirect("/login");
       }
     });
+
+    email ? userFind : res.status(400).redirect("/login");
   } catch (error) {}
 };
 

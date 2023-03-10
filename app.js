@@ -37,6 +37,8 @@ app.use((req, res, next) => {
   next();
 });
 
+
+
 // ROUTES
 app.use("*", (req, res, next) => {
   userIN = req.session.userID;

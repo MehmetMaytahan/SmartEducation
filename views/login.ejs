@@ -13,8 +13,24 @@
                     <div class="col-xl-12 col-md-12 col-sm-12">
                         <div class="contact_form">
                             <div id="message"></div>
-                            <form method="POST" action="/users/login">
+                            <form method="POST" action="/users/login" novalidate>
                                 <div class="row row-fluid">
+                                    <!-- Hata mesajlari -->
+                                    <div class=" offset-1 col-xl-10 col-md-10 col-sm-10 text-center">
+                                        <% if(flashMessages) {%>
+                                            <% if (flashMessages.success) { %>
+                                                <div class="alert alert-success">
+                                                    <%= flashMessages.success %>
+                                                </div>
+                                                <% } else if (flashMessages.error){%>
+                                                    <div class="alert alert-danger">
+                                                        <%= flashMessages.error %>
+                                                    </div>
+                                                    <% } %>
+                                                        <% } %>
+
+                                    </div>
+                                    <!-- Hata mesajlari -->
                                     <div class="offset-1 col-lg-10 col-md-10 col-sm-10">
                                         <input type="email" name="email" id="email" class="form-control"
                                             placeholder="Email">
