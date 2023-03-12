@@ -177,7 +177,7 @@ exports.sendEMail = async (req, res) => {
 
     // send mail with defined transport object
     await transporter.sendMail({
-      to: "maytahan71@gmail.com", // list of receivers
+      to: "try.demo.71@gmail.com", // list of receivers
       subject: `Smart EDU Contact Form New Message`, // Subject line
       html: htmlTemplate // html body
     });
@@ -187,6 +187,5 @@ exports.sendEMail = async (req, res) => {
   } catch (error) {
     req.flash("error", "Something happened!");
     res.status(203).redirect("/contact");
-
   }
 };
