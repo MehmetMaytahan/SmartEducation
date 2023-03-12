@@ -87,9 +87,21 @@
 												COURSE</span></button>
 									</div>
 									<!-- Modal Button End -->
-
-
 								</div><!-- end row -->
+								<div class=" offset-1 col-xl-10 col-md-10 col-sm-10 text-center mt-5">
+
+									<% if(flashMessages) {%>
+										<% if (flashMessages.success) { %>
+											<div class="alert alert-success">
+												<%= flashMessages.success %>
+											</div>
+											<% } else if (flashMessages.error){%>
+												<div class="alert alert-danger">
+													<%= flashMessages.error %>
+												</div>
+												<% } %>
+													<% } %>
+								</div>
 								<div class="row mt-5">
 									<% for(course of courses) { %>
 										<div class="col-lg-6 col-md-6 col-12">

@@ -112,7 +112,9 @@ exports.releaseCourse = async (req, res) => {
 
 exports.deleteCourse = async (req, res) => {
   try {
-    await Course.findOneAndDelete({ slug: req.params.slug });
+    const course = await Course.findOneAndDelete({ slug: req.params.slug });
+
+    req.flash("error", `${course.name} Başarıyla Silinmiştir`);
 
     res.status(200).redirect("/users/dashboard");
   } catch (error) {
