@@ -124,3 +124,21 @@ exports.deleteCourse = async (req, res) => {
     });
   }
 };
+
+exports.updateCourse = async (req, res) => {
+  try {
+    const course = await Course.findOneAndUpdate(
+      { slug: req.params.slug },
+      req.body
+    );
+
+    req.flash("success", `${course.name} Başarıyla Güncellenmiştir!`);
+
+    res.status(200).redirect("/users/dashboard");
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: error
+    });
+  }
+};
