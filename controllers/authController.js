@@ -60,11 +60,29 @@ exports.getDashboardPage = async (req, res) => {
   const courses = await Course.find({ user: req.session.userID });
   const user = await User.findById(req.session.userID).populate("courses");
   const categories = await Category.find();
+  const users = await User.find();
 
   res.status(200).render("dashboard", {
     page_name: "dashboard",
     user,
     categories,
-    courses
+    courses,
+    users
   });
+};
+
+exports.deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndRemove(req.params.id);
+    await Course.deleteMany({ user: req.params.id });
+
+    //req.flash("error", `${course.name} Başarıyla Silinmiştir`);
+
+    res.status(200).redirect("/users/dashboard");
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: error
+    });
+  }
 };

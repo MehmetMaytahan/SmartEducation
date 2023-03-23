@@ -6,7 +6,8 @@ const {
   createUser,
   loginUser,
   logoutUser,
-  getDashboardPage
+  getDashboardPage,
+  deleteUser
 } = require("../controllers/authController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const router = express.Router();
@@ -44,5 +45,7 @@ router.post(
 );
 router.get("/logout", logoutUser); // http://localhost:3000/users/logout
 router.get("/dashboard", authMiddleware, getDashboardPage); // http://localhost:3000/users/logout
+router.delete("/:id", deleteUser); // http://localhost:3000/users/id
+
 
 module.exports = router;
