@@ -56,21 +56,6 @@ exports.logoutUser = async (req, res) => {
   });
 };
 
-exports.getDashboardPage = async (req, res) => {
-  const courses = await Course.find({ user: req.session.userID });
-  const user = await User.findById(req.session.userID).populate("courses");
-  const categories = await Category.find();
-  const users = await User.find();
-
-  res.status(200).render("dashboard", {
-    page_name: "dashboard",
-    user,
-    categories,
-    courses,
-    users
-  });
-};
-
 exports.deleteUser = async (req, res) => {
   try {
     await User.findByIdAndRemove(req.params.id);
@@ -86,3 +71,20 @@ exports.deleteUser = async (req, res) => {
     });
   }
 };
+
+exports.getDashboardPage = async (req, res) => {
+  const courses = await Course.find({ user: req.session.userID });
+  const user = await User.findById(req.session.userID).populate("courses");
+  const categories = await Category.find();
+  const users = await User.find();
+
+  res.status(200).render("dashboard", {
+    page_name: "dashboard",
+    user,
+    categories,
+    courses,
+    users
+  });
+};
+
+

@@ -4083,3 +4083,8 @@ a.link-style3 {
     list-style-type: none;
     justify-content: space-between;
 }
+.space-between{
+    display: flex;
+    justify-content: space-around;
+    
+}
