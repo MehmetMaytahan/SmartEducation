@@ -29,7 +29,7 @@ app.use(
     secret: `${process.env.SESSION_SECRET}`,
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/smartEdu" })
+    store: MongoStore.create({ mongoUrl: process.env.mongoDB_URL })
   })
 );
 app.use(flash());
