@@ -29,7 +29,10 @@ app.use(
     secret: `${process.env.SESSION_SECRET}`,
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: process.env.mongoDB_URL })
+    store: MongoStore.create({
+      mongoUrl: process.env.mongoDB_URL,
+      collectionName: "sessions"
+    })
   })
 );
 app.use(flash());
